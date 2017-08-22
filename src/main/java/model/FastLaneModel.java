@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.UUID;
 
 public class FastLaneModel {
 
@@ -16,7 +17,7 @@ public class FastLaneModel {
 
     public FastLaneModel(LocalDate localDate, LocalTime localTime, DayOfWeek day, int price) {
         this.type = FastLaneConstant.FAST_LANE_TYPE;
-        this.id = "";
+        this.id = UUID.randomUUID().toString();
         this.localDate = localDate;
         this.localTime = localTime;
         this.day = day;

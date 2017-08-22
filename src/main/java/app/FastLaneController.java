@@ -46,9 +46,6 @@ public class FastLaneController {
             String jsonModel = jsonConvertor.convertToSchemaString(model);
             //dataCollector.sendData("url", jsonModel);
         });
-
-
-
         return "request processing";
     }
 
