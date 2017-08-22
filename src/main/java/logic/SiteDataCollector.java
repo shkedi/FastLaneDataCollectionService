@@ -4,6 +4,8 @@ package logic;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.BufferedReader;
@@ -12,15 +14,16 @@ import java.io.InputStreamReader;
 
 public class SiteDataCollector implements DataCollector {
 
-    public SiteDataCollector() {
+    private HttpClient client;
 
+    public SiteDataCollector() {
+        client = HttpClientBuilder.create().build();
     }
 
     @Override
     public String collect(String url) {
         StringBuilder result = null;
 
-        HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
 
         HttpResponse response = null;
@@ -39,5 +42,21 @@ public class SiteDataCollector implements DataCollector {
 
 
         return result.toString();
+    }
+
+    @Override
+    public void sendData(String url, String data) {
+        try {
+            HttpPost request = new HttpPost(url);
+            StringEntity params =new StringEntity(data);
+            request.addHeader("content-type", "application/json");
+            request.setEntity(params);
+            HttpResponse response = client.execute(request);
+            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+
+        } catch (Exception ex) {
+            System.out.println("an error was occurued " + ex);
+
+        }
     }
 }

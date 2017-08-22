@@ -10,6 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @RestController
 @PropertySource("classpath:data.properties")
 public class FastLaneController {
@@ -26,6 +29,8 @@ public class FastLaneController {
     @Value("${fastLaneUrl}")
     private String fastLaneUrl;
 
+    private ExecutorService executorService = Executors.newFixedThreadPool(10);
+
     public FastLaneController() {
 
     }
@@ -33,9 +38,16 @@ public class FastLaneController {
     @RequestMapping("/fastLanePing")
     public String index() {
         System.out.println("Greetings from Fast lane service!");
-        String data = dataCollector.collect(fastLaneUrl);
-        FastLaneModel model = modelCreator.create(data);
-        String jsonModel = jsonConvertor.convertToSchemaString(model);
+
+        executorService.execute( () -> {
+            System.out.println("Start proccesing");
+            String data = dataCollector.collect(fastLaneUrl);
+            FastLaneModel model = modelCreator.create(data);
+            String jsonModel = jsonConvertor.convertToSchemaString(model);
+            //dataCollector.sendData("url", jsonModel);
+        });
+
+
 
         return "request processing";
     }
