@@ -44,19 +44,4 @@ public class SiteDataCollector implements DataCollector {
         return result.toString();
     }
 
-    @Override
-    public void sendData(String url, String data) {
-        try {
-            HttpPost request = new HttpPost(url);
-            StringEntity params =new StringEntity(data);
-            request.addHeader("content-type", "application/json");
-            request.setEntity(params);
-            HttpResponse response = client.execute(request);
-            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
-
-        } catch (Exception ex) {
-            System.out.println("an error was occurued " + ex);
-
-        }
-    }
 }

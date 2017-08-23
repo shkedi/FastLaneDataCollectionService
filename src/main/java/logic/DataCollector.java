@@ -1,9 +1,7 @@
 package logic;
 
+@FunctionalInterface
 public interface DataCollector {
 
     String collect(String path);
-
-    void sendData(String url, String data);
-
 }

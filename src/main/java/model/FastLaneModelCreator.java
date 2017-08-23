@@ -37,8 +37,8 @@ public class FastLaneModelCreator implements ModelCreator<FastLaneModel> {
                 (Month) getValue(x ->  hebrewConvertor.monthConvertor(doc.getElementsByAttributeValue(FastLaneConstant.ID_ELEMENT,x).text()) ,FastLaneConstant.MONTH_ATTR),
                 getValue(x ->  Integer.valueOf(doc.getElementsByAttributeValue(FastLaneConstant.ID_ELEMENT,x).text()) ,FastLaneConstant.DAY_OF_MONTH_ATTR));
 
-        LocalTime localTime = LocalTime.parse(
-                getValue(x ->  doc.getElementsByAttributeValue(FastLaneConstant.ID_ELEMENT,x).text() ,FastLaneConstant.TIME_ATTR));
+        String[] timeNum = getValue(x -> doc.getElementsByAttributeValue(FastLaneConstant.ID_ELEMENT, x).text(), FastLaneConstant.TIME_ATTR).split(":");
+        LocalTime localTime = LocalTime.of(Integer.parseInt(timeNum[0]), Integer.parseInt(timeNum[1]));
 
         fastLaneModel = new FastLaneModel(localDate, localTime, day, price);
 

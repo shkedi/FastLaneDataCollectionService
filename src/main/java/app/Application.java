@@ -2,10 +2,7 @@ package app;
 
 import java.util.Arrays;
 
-import logic.DataCollector;
-import logic.JsonConvertor;
-import logic.SchemaConvertor;
-import logic.SiteDataCollector;
+import logic.*;
 import model.FastLaneModelCreator;
 import model.HebrewConvertor;
 import model.LangConvertor;
@@ -44,18 +41,8 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
-        };
+    public DataFollower dataFollower() {
+        return new RabbitMqDataFollower();
     }
 
 }

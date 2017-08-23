@@ -1,11 +1,15 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
 
+@JsonPropertyOrder({ "type", "id", "date", "time", "price" })
 public class FastLaneModel {
 
     private String type;
@@ -24,22 +28,27 @@ public class FastLaneModel {
         this.price = price;
     }
 
+    @JsonProperty("type")
     public String getType() {
         return type;
     }
 
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    @JsonProperty("date")
+    public String getLocalDate() {
+        return localDate.toString();
     }
 
-    public LocalTime getLocalTime() {
-        return localTime;
+    @JsonProperty("time")
+    public String getLocalTime() {
+        return localTime.toString();
     }
 
+    @JsonProperty("price")
     public int getPrice() {
         return price;
     }

@@ -1,6 +1,7 @@
 package app;
 
 import logic.DataCollector;
+import logic.DataFollower;
 import logic.SchemaConvertor;
 import model.FastLaneModel;
 import model.ModelCreator;
@@ -29,6 +30,9 @@ public class FastLaneController {
     @Value("${fastLaneUrl}")
     private String fastLaneUrl;
 
+    @Autowired
+    private DataFollower dataFollower;
+
     private ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     public FastLaneController() {
@@ -44,7 +48,7 @@ public class FastLaneController {
             String data = dataCollector.collect(fastLaneUrl);
             FastLaneModel model = modelCreator.create(data);
             String jsonModel = jsonConvertor.convertToSchemaString(model);
-            //dataCollector.sendData("url", jsonModel);
+            dataFollower.follow(jsonModel);
         });
         return "request processing";
     }

@@ -14,6 +14,7 @@ public class FastLaneConstant {
     public static final String MONTH_ATTR = "lblMonth";
     public static final String YEAR_ATTR = "lblYear";
     public static final String FAST_LANE_TYPE = "FastLane";
+    public static final String PERSISTENCE_QUEUE = "PERSISTENCE_QUEUE";
 
 
 }
